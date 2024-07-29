@@ -20,8 +20,8 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::with(['customer', 'products'])->latest('id')->paginate(1);
-
-        return view('admin.index', compact('orders'));
+        
+        return view('admin.index', compact(['orders']));
     }
 
     /**
@@ -44,6 +44,9 @@ class OrderController extends Controller
 
                 $orderDetails = [];
                 $totalAmount = 0;
+
+                $products =$request->products;
+                // dd($products);
                 foreach ($request->products as $key => $product) {
 
                     $product['supplier_id'] = $supplier->id;
@@ -51,9 +54,9 @@ class OrderController extends Controller
                     if ($request->hasFile("products.$key.image")) {
                         $product['image'] = Storage::put('products', $request->file("products.$key.image"));
                     }
-
+     
                     $tmp = Product::query()->create($product);
-
+ 
                     $orderDetails[$tmp->id] = [
                         'qty' => $request->order_details[$key]['qty'],
                         'price' => $tmp->price

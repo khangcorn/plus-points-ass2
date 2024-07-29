@@ -29,6 +29,7 @@
                         <th>Customer Info</th>
                         <th>Total Amount</th>
                         <th>Order Detail</th>
+    
                         <th>Created at</th>
                         <th>Updated at</th>
                         <th>Action</th>
@@ -47,6 +48,8 @@
                             </td>
                             <td>{{ number_format($order->total_amount) }}</td>
                             <td>
+
+                                
                                 @foreach ($order->products as $product)
                                     <h6>Sản phẩm: {{ $product->name }}</h6>
                                     <ul>
